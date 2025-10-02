@@ -60,7 +60,7 @@ export default function Watch() {
   return (
     <div className="grid gap-8 lg:grid-cols-[2fr,1fr]">
       <div className="space-y-6">
-        <div className="overflow-hidden rounded-2xl border border-slate-800 bg-black">
+        <div className="overflow-hidden rounded-2xl border border-white/10 bg-black/80 shadow-lg">
           <video
             src={video.videoUrl}
             poster={video.posterUrl}
@@ -70,7 +70,7 @@ export default function Watch() {
         </div>
         <div className="space-y-3">
           <h1 className="text-2xl font-semibold text-white">{video.title}</h1>
-          <div className="flex flex-wrap items-center gap-3 text-sm text-slate-400">
+          <div className="flex flex-wrap items-center gap-3 text-sm text-slate-300">
             <span>{video.channelName}</span>
             <span>•</span>
             <span>{video.views} views</span>
@@ -78,11 +78,11 @@ export default function Watch() {
             <span>{new Date(video.createdAt).toLocaleDateString()}</span>
             <LikeButton videoId={video.id} />
           </div>
-          <div className="space-y-2 rounded-xl border border-slate-800 bg-slate-900 p-4 text-sm text-slate-200">
+          <div className="space-y-2 rounded-xl border border-white/10 bg-slate-950/70 p-4 text-sm text-slate-200 backdrop-blur">
             <p className="whitespace-pre-wrap">{video.description}</p>
-            <div className="flex flex-wrap gap-2 text-xs text-slate-400">
+            <div className="flex flex-wrap gap-2 text-xs text-slate-300">
               {video.tags.map((tag) => (
-                <span key={tag} className="rounded-full border border-slate-700 px-2 py-0.5">
+                <span key={tag} className="rounded-full border border-white/10 px-2 py-0.5">
                   #{tag}
                 </span>
               ))}

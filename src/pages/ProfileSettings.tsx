@@ -42,13 +42,16 @@ export default function ProfileSettings() {
         <h1 className="text-2xl font-semibold text-white">Profile settings</h1>
         <p className="text-sm text-slate-400">Control how your channel appears across CrownShield.</p>
       </header>
-      <form onSubmit={handleSubmit} className="space-y-5 rounded-2xl border border-slate-800 bg-slate-900 p-6">
+      <form
+        onSubmit={handleSubmit}
+        className="space-y-5 rounded-2xl border border-white/10 bg-slate-950/70 p-6 backdrop-blur shadow-lg"
+      >
         <label className="block space-y-2">
           <span className="text-sm font-semibold text-slate-200">Display name</span>
           <input
             value={displayName}
             onChange={(event) => setDisplayName(event.target.value)}
-            className="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm focus:border-brand focus:outline-none"
+            className="w-full rounded-lg border border-white/10 bg-white/10 px-3 py-2 text-sm text-slate-100 placeholder:text-slate-400 focus:border-brand focus:outline-none"
           />
         </label>
         <label className="block space-y-2">
@@ -57,7 +60,7 @@ export default function ProfileSettings() {
             value={bio}
             onChange={(event) => setBio(event.target.value)}
             rows={4}
-            className="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm focus:border-brand focus:outline-none"
+            className="w-full rounded-lg border border-white/10 bg-white/10 px-3 py-2 text-sm text-slate-100 placeholder:text-slate-400 focus:border-brand focus:outline-none"
           />
         </label>
         <label className="block space-y-2">
@@ -65,7 +68,7 @@ export default function ProfileSettings() {
           <input
             value={avatarUrl}
             onChange={(event) => setAvatarUrl(event.target.value)}
-            className="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm focus:border-brand focus:outline-none"
+            className="w-full rounded-lg border border-white/10 bg-white/10 px-3 py-2 text-sm text-slate-100 placeholder:text-slate-400 focus:border-brand focus:outline-none"
           />
         </label>
         {message && <p className="text-sm text-slate-300">{message}</p>}
@@ -80,7 +83,7 @@ export default function ProfileSettings() {
           <button
             type="button"
             onClick={() => navigate(-1)}
-            className="rounded-lg border border-slate-700 px-4 py-2 text-sm text-slate-300 hover:border-brand"
+            className="rounded-lg border border-white/10 px-4 py-2 text-sm text-slate-200 hover:border-brand"
           >
             Cancel
           </button>

@@ -191,13 +191,13 @@ export default function Upload() {
     <div className="space-y-8">
       <header className="space-y-2">
         <h1 className="text-2xl font-semibold text-white">Upload new video</h1>
-        <p className="text-sm text-slate-400">
+        <p className="text-sm text-slate-300">
           Share your latest creation with the CrownShield community. Hi {user?.displayName}!
         </p>
       </header>
       <form onSubmit={handleSubmit} className="space-y-6">
         {uploadLimit && (
-          <p className="text-sm text-slate-400">Maximum file size: {(uploadLimit / (1024 * 1024)).toFixed(0)} MB</p>
+          <p className="text-sm text-slate-300">Maximum file size: {(uploadLimit / (1024 * 1024)).toFixed(0)} MB</p>
         )}
         <div className="grid gap-6 lg:grid-cols-[2fr,1fr]">
           <div className="space-y-6">
@@ -207,7 +207,7 @@ export default function Upload() {
                 type="file"
                 accept="video/mp4"
                 onChange={handleVideoChange}
-                className="w-full rounded-lg border border-slate-700 bg-slate-900 px-3 py-2 text-sm"
+                className="w-full rounded-lg border border-white/10 bg-white/10 px-3 py-2 text-sm text-slate-100 file:mr-4 file:rounded-md file:border-0 file:bg-brand file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white"
               />
             </label>
             {videoPreview && (
@@ -217,7 +217,7 @@ export default function Upload() {
                   src={videoPreview}
                   controls
                   onLoadedMetadata={(event) => setDuration((event.target as HTMLVideoElement).duration)}
-                  className="w-full rounded-xl border border-slate-800"
+                  className="w-full rounded-xl border border-white/10 bg-black/80"
                 />
                 <button
                   type="button"
@@ -230,20 +230,20 @@ export default function Upload() {
                   <img
                     src={posterPreview}
                     alt="Poster preview"
-                    className="w-full rounded-xl border border-slate-800"
+                    className="w-full rounded-xl border border-white/10"
                   />
                 )}
                 <canvas ref={canvasRef} className="hidden" />
               </div>
             )}
           </div>
-          <aside className="space-y-4 rounded-2xl border border-slate-800 bg-slate-900 p-6">
+          <aside className="space-y-4 rounded-2xl border border-white/10 bg-slate-950/70 p-6 backdrop-blur shadow-lg">
             <label className="block space-y-2">
               <span className="text-sm font-semibold text-slate-200">Title</span>
               <input
                 value={title}
                 onChange={(event) => setTitle(event.target.value)}
-                className="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm focus:border-brand focus:outline-none"
+                className="w-full rounded-lg border border-white/10 bg-white/10 px-3 py-2 text-sm text-slate-100 placeholder:text-slate-400 focus:border-brand focus:outline-none"
               />
             </label>
             <label className="block space-y-2">
@@ -252,7 +252,7 @@ export default function Upload() {
                 value={description}
                 onChange={(event) => setDescription(event.target.value)}
                 rows={5}
-                className="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm focus:border-brand focus:outline-none"
+                className="w-full rounded-lg border border-white/10 bg-white/10 px-3 py-2 text-sm text-slate-100 placeholder:text-slate-400 focus:border-brand focus:outline-none"
               />
             </label>
             <label className="block space-y-2">
@@ -260,16 +260,16 @@ export default function Upload() {
               <input
                 value={tags}
                 onChange={(event) => setTags(event.target.value)}
-                className="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm focus:border-brand focus:outline-none"
+                className="w-full rounded-lg border border-white/10 bg-white/10 px-3 py-2 text-sm text-slate-100 placeholder:text-slate-400 focus:border-brand focus:outline-none"
               />
             </label>
             {progress > 0 && (
               <div className="space-y-2 text-sm">
-                <div className="flex items-center justify-between">
-                  <span className="text-slate-300">Uploading</span>
-                  <span className="text-slate-400">{progress}%</span>
+                <div className="flex items-center justify-between text-slate-300">
+                  <span>Uploading</span>
+                  <span>{progress}%</span>
                 </div>
-                <div className="h-2 w-full overflow-hidden rounded-full bg-slate-800">
+                <div className="h-2 w-full overflow-hidden rounded-full bg-white/10">
                   <div
                     className="h-full bg-brand"
                     style={{ width: `${progress}%` }}
