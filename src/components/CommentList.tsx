@@ -82,7 +82,7 @@ export default function CommentList({ videoId }: CommentListProps) {
             value={content}
             onChange={(event) => setContent(event.target.value)}
             placeholder="Share your thoughts"
-            className="w-full rounded-lg border border-slate-800 bg-slate-900 p-3 text-sm focus:border-brand focus:outline-none"
+            className="w-full rounded-lg border border-white/10 bg-white/10 p-3 text-sm text-slate-100 placeholder:text-slate-400 focus:border-brand focus:outline-none"
           />
           <button
             type="submit"
@@ -93,15 +93,15 @@ export default function CommentList({ videoId }: CommentListProps) {
           </button>
         </form>
       )}
-      {isLoading && <p className="text-sm text-slate-400">Loading comments...</p>}
+      {isLoading && <p className="text-sm text-slate-300">Loading comments...</p>}
       {error && <p className="text-sm text-red-400">{(error as Error).message}</p>}
       <ul className="space-y-4">
         {data?.comments.map((comment) => (
-          <li key={comment.id} className="rounded-lg border border-slate-800 bg-slate-900 p-4">
+          <li key={comment.id} className="rounded-lg border border-white/10 bg-slate-950/70 p-4 backdrop-blur">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-semibold text-white">{comment.authorName}</p>
-                <p className="text-xs text-slate-500">
+                <p className="text-xs text-slate-400">
                   {new Date(comment.createdAt).toLocaleString()}
                 </p>
               </div>

@@ -9,7 +9,7 @@ export default function VideoCard({ video }: VideoCardProps) {
   return (
     <Link
       to={`/watch/${video.id}`}
-      className="flex flex-col gap-3 rounded-xl border border-slate-800 bg-slate-900 transition hover:border-brand"
+      className="flex flex-col gap-3 rounded-xl border border-white/10 bg-slate-950/70 transition hover:border-brand/60 backdrop-blur"
     >
       <div className="relative aspect-video overflow-hidden rounded-t-xl">
         <img src={video.posterUrl} alt={video.title} className="h-full w-full object-cover" />
@@ -19,13 +19,13 @@ export default function VideoCard({ video }: VideoCardProps) {
       </div>
       <div className="space-y-2 px-4 pb-4">
         <h3 className="text-sm font-semibold text-white line-clamp-2">{video.title}</h3>
-        <p className="text-xs text-slate-400">{video.channelName}</p>
-        <p className="text-xs text-slate-500">
+        <p className="text-xs text-slate-300">{video.channelName}</p>
+        <p className="text-xs text-slate-400">
           {video.views} views · {new Date(video.createdAt).toLocaleDateString()}
         </p>
-        <div className="flex flex-wrap gap-1 text-[11px] text-slate-400">
+        <div className="flex flex-wrap gap-1 text-[11px] text-slate-300">
           {video.tags.map((tag) => (
-            <span key={tag} className="rounded-full border border-slate-700 px-2 py-0.5">
+            <span key={tag} className="rounded-full border border-white/10 px-2 py-0.5">
               #{tag}
             </span>
           ))}

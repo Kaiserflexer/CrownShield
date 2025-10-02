@@ -49,10 +49,10 @@ export default function LikeButton({ videoId }: { videoId: string }) {
       disabled={!user || toggle.isPending}
       onClick={() => toggle.mutate()}
       className={clsx(
-        'flex items-center gap-2 rounded-lg border px-4 py-2 text-sm transition',
+        'flex items-center gap-2 rounded-lg border px-4 py-2 text-sm transition backdrop-blur',
         data?.liked
-          ? 'border-brand bg-brand/20 text-brand'
-          : 'border-slate-700 bg-slate-900 text-slate-300 hover:border-brand'
+          ? 'border-brand/40 bg-brand/20 text-brand'
+          : 'border-white/10 bg-white/10 text-slate-200 hover:border-brand'
       )}
     >
       <span>{data?.liked ? '♥' : '♡'}</span>

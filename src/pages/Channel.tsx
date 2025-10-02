@@ -29,14 +29,14 @@ export default function Channel() {
 
   return (
     <div className="space-y-6">
-      <header className="rounded-2xl border border-slate-800 bg-slate-900 p-8">
+      <header className="rounded-2xl border border-white/10 bg-slate-950/70 p-8 backdrop-blur">
         <h1 className="text-2xl font-semibold text-white">{channelName}</h1>
-        <p className="mt-2 text-sm text-slate-400">
+        <p className="mt-2 text-sm text-slate-300">
           {channelVideos.length} videos · Member since{' '}
           {channelVideos[0] ? new Date(channelVideos[0].createdAt).toLocaleDateString() : 'recently'}
         </p>
       </header>
-      {isLoading && <p className="text-sm text-slate-400">Loading channel...</p>}
+      {isLoading && <p className="text-sm text-slate-300">Loading channel...</p>}
       {error && <p className="text-sm text-red-400">{(error as Error).message}</p>}
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {channelVideos.map((video) => (

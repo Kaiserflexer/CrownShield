@@ -24,8 +24,8 @@ export default function Layout() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100">
-      <header className="border-b border-slate-800 bg-slate-900">
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-900 text-slate-100">
+      <header className="border-b border-white/10 bg-white/5 backdrop-blur">
         <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-4">
             <Link to="/" className="flex items-center gap-2 text-xl font-semibold">
@@ -45,7 +45,7 @@ export default function Layout() {
           </div>
           <form onSubmit={handleSubmit} className="flex w-full max-w-md items-center gap-2">
             <input
-              className="w-full rounded-lg border border-slate-700 bg-slate-900 px-3 py-2 text-sm focus:border-brand focus:outline-none"
+              className="w-full rounded-lg border border-white/10 bg-white/10 px-3 py-2 text-sm text-slate-100 placeholder:text-slate-400 focus:border-brand focus:outline-none"
               placeholder="Search videos"
               value={query}
               onChange={(event) => setQuery(event.target.value)}
@@ -63,13 +63,13 @@ export default function Layout() {
                 <span className="hidden text-sm font-medium sm:inline">{user.displayName}</span>
                 <Link
                   to="/settings/profile"
-                  className="rounded-lg border border-slate-700 px-3 py-2 text-sm hover:border-brand"
+                  className="rounded-lg border border-white/20 px-3 py-2 text-sm text-slate-100 hover:border-brand"
                 >
                   Settings
                 </Link>
                 <button
                   onClick={() => logout().catch(() => undefined)}
-                  className="rounded-lg bg-slate-800 px-3 py-2 text-sm hover:bg-slate-700"
+                  className="rounded-lg bg-white/10 px-3 py-2 text-sm text-slate-100 transition hover:bg-white/20"
                 >
                   Logout
                 </button>
@@ -88,7 +88,7 @@ export default function Layout() {
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-6">
         <Outlet />
       </main>
-      <footer className="border-t border-slate-800 bg-slate-900 py-6 text-center text-xs text-slate-400">
+      <footer className="border-t border-white/10 bg-white/5 py-6 text-center text-xs text-slate-300 backdrop-blur">
         © {new Date().getFullYear()} CrownShield. Stream responsibly.
       </footer>
     </div>
