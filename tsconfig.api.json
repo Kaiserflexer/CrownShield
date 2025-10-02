@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.node.json",
+  "compilerOptions": {
+    "outDir": "dist/api",
+    "moduleResolution": "Node",
+    "module": "CommonJS",
+    "target": "ES2022",
+    "types": ["node"],
+    "noEmit": false,
+    "declaration": true,
+    "emitDeclarationOnly": false
+  },
+  "include": ["api/**/*.ts"],
+  "exclude": ["node_modules"]
+}

@@ -1,0 +1,12 @@
+node_modules
+.DS_Store
+dist
+.env
+.env.local
+.vercel
+
+# Editor directories
+.vscode
+.idea
+*.tsbuildinfo
+.tsbuild/
