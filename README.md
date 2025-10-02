@@ -15,8 +15,8 @@ The dev server runs on [http://localhost:5173](http://localhost:5173). API route
 
 Copy `.env.example` to `.env.local` (not committed) and provide values:
 
-- `BLOB_READ_WRITE_TOKEN` – scoped token generated from the Vercel dashboard.
-- `BLOB_PUBLIC_BASE_URL` – public base URL for the Blob store (e.g. `https://<app>.public.blob.vercel-storage.com`).
+- `BLOB_READ_WRITE_TOKEN` – scoped token generated from the Vercel dashboard for the shared store `store_dPOa6uxzT8rs5bEK`.
+- `BLOB_PUBLIC_BASE_URL` – public base URL for that store. For production we use `https://dpoa6uxzt8rs5bek.public.blob.vercel-storage.com`.
 - `FILE_SIZE_LIMIT_MB` – maximum file size accepted for uploads.
 - `JWT_SECRET` – secret string for signing auth tokens.
 
@@ -63,6 +63,8 @@ Deploy to Vercel:
 
 1. Create a new Vercel project and link this repository.
 2. Set the required environment variables inside the Vercel dashboard (Production and Preview).
+   - `BLOB_READ_WRITE_TOKEN` must be a scoped token generated for `store_dPOa6uxzT8rs5bEK`.
+   - `BLOB_PUBLIC_BASE_URL` should be `https://dpoa6uxzt8rs5bek.public.blob.vercel-storage.com`.
 3. Ensure the project has access to a Vercel Blob store and the provided token.
 4. Push to the default branch – Vercel will build the Vite frontend and compile TypeScript API routes automatically.
 
