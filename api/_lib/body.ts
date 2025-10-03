@@ -1,7 +1,15 @@
 import type { VercelRequest } from '@vercel/node';
 
 export async function readJsonBody<T = unknown>(req: VercelRequest): Promise<T | null> {
-  if (req.body) {
+  if (req.body !== undefined && req.body !== null) {
+    if (typeof req.body === 'string') {
+      return JSON.parse(req.body) as T;
+    }
+
+    if (req.body instanceof Buffer) {
+      return JSON.parse(req.body.toString('utf8')) as T;
+    }
+
     return req.body as T;
   }
 
