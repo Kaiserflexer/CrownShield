@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "test": "tsx api/_lib/__tests__/createUser.test.ts"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.50.0",
@@ -44,6 +45,7 @@
     "@vercel/node": "^3.2.3",
     "@types/cookie": "^0.6.0",
     "@vitejs/plugin-react-swc": "^3.5.0",
-    "typescript-eslint": "^8.2.0"
+    "typescript-eslint": "^8.2.0",
+    "tsx": "^4.16.2"
   }
 }

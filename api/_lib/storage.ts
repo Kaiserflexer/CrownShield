@@ -1,5 +1,5 @@
 import { put } from '@vercel/blob';
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 
 type DatasetKey =
@@ -70,21 +70,92 @@ async function writeToFs(path: string, contents: string): Promise<void> {
   await writeFile(path, contents, 'utf8');
 }
 
+type ReadonlyFsError = { code?: string };
+
+function isReadonlyFsError(error: unknown): boolean {
+  if (!error || typeof error !== 'object') {
+    return false;
+  }
+  const { code } = error as ReadonlyFsError;
+  return code === 'EROFS' || code === 'EACCES' || code === 'EPERM';
+}
+
+let resolvedBaseDir: string | null | undefined;
+let testingBaseDirCandidates: string[] | null = null;
+
+function getBaseDirCandidates(): string[] {
+  if (testingBaseDirCandidates) {
+    return testingBaseDirCandidates;
+  }
+
+  const configured = process.env.DATA_DIR;
+  const defaults = [process.cwd(), '/tmp/crownshield'];
+  if (configured) {
+    return [configured, ...defaults];
+  }
+
+  return defaults;
+}
+
+async function ensureWritableDirectory(dir: string): Promise<boolean> {
+  try {
+    await mkdir(dir, { recursive: true });
+    const probe = join(dir, '.write-test');
+    await writeFile(probe, '', 'utf8');
+    await rm(probe, { force: true });
+    return true;
+  } catch (error: unknown) {
+    if (isReadonlyFsError(error)) {
+      return false;
+    }
+    if (error && typeof error === 'object' && 'code' in error && (error as ReadonlyFsError).code === 'EEXIST') {
+      return false;
+    }
+    throw error;
+  }
+}
+
+async function resolveWritableBaseDir(): Promise<string | null> {
+  if (resolvedBaseDir !== undefined) {
+    return resolvedBaseDir;
+  }
+
+  for (const candidate of getBaseDirCandidates()) {
+    if (await ensureWritableDirectory(candidate)) {
+      resolvedBaseDir = candidate;
+      return candidate;
+    }
+  }
+
+  resolvedBaseDir = null;
+  return null;
+}
+
 export async function readDataset<T>(key: DatasetKey, fallback: T): Promise<T> {
   const path = DATASET_PATHS[key];
-  const localPath = join(process.cwd(), path);
+  const baseDir = await resolveWritableBaseDir();
+  const localPath = baseDir ? join(baseDir, path) : null;
 
   const blobValue = await readFromBlob(path);
   if (blobValue) {
     return JSON.parse(blobValue) as T;
   }
 
-  const fsValue = await readFromFs(localPath);
+  const fsValue = localPath ? await readFromFs(localPath) : null;
   if (fsValue) {
     return JSON.parse(fsValue) as T;
   }
 
-  await writeToFs(localPath, JSON.stringify(fallback, null, 2));
+  if (localPath) {
+    try {
+      await writeToFs(localPath, JSON.stringify(fallback, null, 2));
+    } catch (error: unknown) {
+      if (!isReadonlyFsError(error)) {
+        throw error;
+      }
+    }
+  }
+
   if (token) {
     await writeToBlob(path, JSON.stringify(fallback));
   }
@@ -93,9 +164,18 @@ export async function readDataset<T>(key: DatasetKey, fallback: T): Promise<T> {
 
 export async function writeDataset<T>(key: DatasetKey, data: T): Promise<void> {
   const path = DATASET_PATHS[key];
-  const localPath = join(process.cwd(), path);
+  const baseDir = await resolveWritableBaseDir();
+  const localPath = baseDir ? join(baseDir, path) : null;
   const serialized = JSON.stringify(data, null, 2);
-  await writeToFs(localPath, serialized);
+  if (localPath) {
+    try {
+      await writeToFs(localPath, serialized);
+    } catch (error: unknown) {
+      if (!isReadonlyFsError(error)) {
+        throw error;
+      }
+    }
+  }
   await writeToBlob(path, JSON.stringify(data));
 }
 
@@ -109,3 +189,13 @@ export async function updateDataset<T>(
   await writeDataset(key, next);
   return next;
 }
+
+export const __storageTestUtils = {
+  resetBaseDirectoryCache(): void {
+    resolvedBaseDir = undefined;
+  },
+  setBaseDirectoryCandidates(candidates: string[] | null): void {
+    testingBaseDirCandidates = candidates;
+    resolvedBaseDir = undefined;
+  }
+};
